@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace RaceTo21.Shared
+namespace RaceTo21.Pages
 {
     #line hidden
     using System;
@@ -82,13 +82,82 @@ using RaceTo21.Shared;
 #line default
 #line hidden
 #nullable disable
-    public partial class MainLayout : LayoutComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/")]
+    public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 113 "D:\github\RaceTo21\RaceTo21\Pages\Index.razor"
+      
+    Game game = new Game();
+
+
+    private void UpdateName(ChangeEventArgs e)
+    {
+        game.playerName = e.Value.ToString();
+        game.AddPlayer(game.playerName);
+    }
+
+    private void CheckPlayerName()
+    {
+        Console.WriteLine(game.players.Count);
+        if (game.players.Count < game.numberOfPlayers) 
+        {
+            return;
+        }
+        foreach (Player player in game.players)
+        {
+
+            if (player == null || player.name.Length < 1)
+            {
+                return;
+            }
+        }
+        game.DoNextTask();
+    }
+
+    private void DrawCards()
+    {
+        Player player = game.players[game.currentPlayer];
+        if (game.cardCount != 0 )
+        {
+
+            if (player.status == PlayerStatus.active)
+            {
+                List<Card> GetCardOneTime = game.deck.DealTopCard(game.cardCount); //give player all cards they choose
+                foreach (Card card in GetCardOneTime)
+                {
+                    player.cards.Add(card);
+                }
+                player.score = game.ScoreHand(player);
+                if (player.score > 21)
+                {
+                    player.status = PlayerStatus.bust;
+                }
+                else if (player.score == 21)
+                {
+                    player.status = PlayerStatus.win;
+                }
+            }
+            game.currentPlayer++;
+            if (game.currentPlayer > game.players.Count - 1)
+            {
+                game.currentPlayer = 0; // back to the first player...
+            }
+        }
+        else
+        {
+            player.status = PlayerStatus.stay;
+        }
+    }
+
+#line default
+#line hidden
+#nullable disable
     }
 }
 #pragma warning restore 1591

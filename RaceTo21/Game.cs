@@ -6,16 +6,17 @@ namespace RaceTo21
     public class Game
     {
         public int numberOfPlayers = 1;// number of players in current game
-        List<Player> players = new List<Player>(); // list of objects containing player data
+        public List<Player> players = new List<Player>(); // list of objects containing player data
         public string playerName = "";
         public int cardCount; //count how much card play want
         public Deck deck {
             get; private set;
         } // deck of cards
-        private int currentPlayer = 0; // current player on list
+        public int currentPlayer = 0; // current player on list
         public GameTask nextTask;// keeps track of game state
-        private bool cheating = true; // lets you cheat for testing purposes if true
-
+        private bool cheating = false; // lets you cheat for testing purposes if true
+        public bool isEmpty = true;
+        public string winner = "";
         public Game()
         {
             deck = new Deck();
@@ -33,6 +34,8 @@ namespace RaceTo21
             players.Add(new Player(n));
         }
 
+      
+
         /* Figures out what task to do next in game
          * as represented by field nextTask
          * Calls methods required to complete task
@@ -47,44 +50,25 @@ namespace RaceTo21
             }
             else if (nextTask == GameTask.GetNumberOfPlayers)
             {
+                for (int i = 0; i < numberOfPlayers; i++) 
+                {
+                    players.Add(new Player(""));
+                }
                 nextTask = GameTask.GetNames;
             }
             else if (nextTask == GameTask.GetNames)
             {
-                for (var count = 1; count <= numberOfPlayers; count++)
-                {
-                    var name = playerName;
-                    AddPlayer(name); // NOTE: player list will start from 0 index even though we use 1 for our count here to make the player numbering more human-friendly
-                }
-                
+                //for (var count = 1; count <= numberOfPlayers; count++)
+                //{
+                // var name = playerName;
+                //AddPlayer(name); // NOTE: player list will start from 0 index even though we use 1 for our count here to make the player numbering more human-friendly
                 nextTask = GameTask.PlayerTurn;
+
+               
             }
             else if (nextTask == GameTask.PlayerTurn)
             {
-                Player player = players[currentPlayer];
-                if (player.status == PlayerStatus.active)
-                {
-                   
-                        List<Card> GetCardOneTime = deck.DealTopCard(cardCount); //give player all cards they choose
-                        foreach (Card card in GetCardOneTime) 
-                        {
-                            player.cards.Add(card);
-                        }
-                        player.score = ScoreHand(player);
-                        if (player.score > 21)
-                        {
-                            player.status = PlayerStatus.bust;
-                        }
-                        else if (player.score == 21)
-                        {
-                            player.status = PlayerStatus.win;
-                        }
-                    
-                    else
-                    {
-                        player.status = PlayerStatus.stay;
-                    }
-                }
+
                 /*cardTable.ShowHand(player);*/
                 nextTask = GameTask.CheckForEnd;
             }
@@ -93,14 +77,15 @@ namespace RaceTo21
                 if (!CheckActivePlayers())
                 {
                     Player winner = DoFinalScoring();
-                    /*Player.AnnounceWinner(winner); //output the winner of this round
+                    AnnounceWinner(winner); //output the winner of this round
 
                     //new round
-                    List<Player> ContinuePlayers = new List<Player>(); *///page2, level2, checke whether players want to continue games
-                    foreach (Player player in players){
+                    /*List<Player> ContinuePlayers = new List<Player>(); *///page2, level2, checke whether players want to continue games
+                    foreach (Player player in players)
+                    {
                         bool loop = true; //tracking whether player says Y or N
                         while (loop)
-                        {   
+                        {
                             Console.Write(player.name + ", do you want a new round? (Y/N)");
                             string response = Console.ReadLine();
                             if (response.ToUpper().StartsWith("Y")) //if player choose Y
@@ -108,7 +93,7 @@ namespace RaceTo21
                                 player.cards.Clear(); //clear all hand cards
                                 player.score = 0; //reset score
                                 player.status = PlayerStatus.active; // player state become active
-                               /* ContinuePlayers.Add(player); */// add player into continueplayers list
+                                /* ContinuePlayers.Add(player); */// add player into continueplayers list
                                 loop = false; // Jump out of the loop
                             }
                             else if (response.ToUpper().StartsWith("N")) //if player choose N
@@ -124,7 +109,7 @@ namespace RaceTo21
                     }
                     if (numberOfPlayers >= 2) //if more than 1 player continue playing game, game will begin again
                     {
-                       /* players = ContinuePlayers;*/
+                        /* players = ContinuePlayers;*/
                         deck = new Deck();//new deck to start a new game
                         deck.Shuffle();
                         currentPlayer = 0; //back to the first player
@@ -135,7 +120,8 @@ namespace RaceTo21
                     }
                     else
                     {
-                        if (numberOfPlayers == 1) { //if only 1 player continue playing game, game over and the only one player will win
+                        if (numberOfPlayers == 1)
+                        { //if only 1 player continue playing game, game over and the only one player will win
                             Console.WriteLine(players[0].name + " is final winner!");
                         }
                         /*Player.RealEnd();*/
@@ -158,6 +144,7 @@ namespace RaceTo21
                 nextTask = GameTask.GameOver;
             }
         }
+
 
         public int ScoreHand(Player player)
         {
@@ -226,6 +213,18 @@ namespace RaceTo21
             return true; //nobody win or at least 2 remaining players 
         }
 
+        public void AnnounceWinner(Player player)
+        {
+            if (player != null)
+            {
+                winner = player.name + " wins!";
+            }
+            else
+            {
+                winner = "Everyone busted!";
+            }
+
+        }
 
         public Player DoFinalScoring()
         {

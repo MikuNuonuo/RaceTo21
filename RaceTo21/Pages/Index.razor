@@ -8,72 +8,161 @@
 
     @if (game.nextTask == GameTask.welcomePage)
     {
-    <div id="page1">
-        <div id="titleBackground">
-            <img src="https://wushu.neocities.org/raceTo21/1.png" alt="background" title="this is the background of page1" width="907px" height="510px">
+        <div id="page1">
+            <div id="titleBackground">
+                <img src="https://wushu.neocities.org/raceTo21/1.png" alt="background" title="this is the background of page1" width="907px" height="510px">
+            </div>
+            <button id="start" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/1button3.png" width="187px" height="47px" alt="submit" /></button>
+            <button id="quit" class="btn-3d purple" type="submit" style="border: none; background: transparent"><img src="https://wushu.neocities.org/raceTo21/1button1.png" width="187px" height="47px" alt="submit" /></button>
         </div>
-        <button id="start" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/1button3.png" width="187px" height="47px" alt="submit" /></button>
-        <button id="quit" class="btn-3d purple" type="submit" style="border: none; background: transparent"><img src="https://wushu.neocities.org/raceTo21/1button1.png" width="187px" height="47px" alt="submit" /></button>
-    </div>
     }
     else if (game.nextTask == GameTask.GetNumberOfPlayers)
     {
-<div id="page2">
-    <div id="2Background">
-        <img src="https://wushu.neocities.org/raceTo21/2bg.png" alt="background" title="this is the background of page2" width="907px" height="510px">
-    </div>
-    <div id="playerNumber">
-        <input type="range" class="col-10 from-control-range" min="1" max="6" @bind="game.numberOfPlayers" />
-    </div>
-    <div id="PnumberBG"><h3>@game.numberOfPlayers</h3></div>
-    <div id="Pnumber"><h3>@game.numberOfPlayers</h3></div>
-        <button id="next" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
-    </div>
+        <div id="page2">
+            <div id="2Background">
+                <img src="https://wushu.neocities.org/raceTo21/2bg.png" alt="background" title="this is the background of page2" width="907px" height="510px">
+            </div>
+            <div id="playerNumber">
+                <input type="range" class="col-10 from-control-range" min="1" max="6" @bind="game.numberOfPlayers" />
+            </div>
+            <div id="PnumberBG"><h3>@game.numberOfPlayers</h3></div>
+            <div id="Pnumber"><h3>@game.numberOfPlayers</h3></div>
+            <button id="next" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
+        </div>
     }
 
     else if (game.nextTask == GameTask.GetNames)
     {
-<div id="page3">
-    <div id="3Background">
-        <img src="https://wushu.neocities.org/raceTo21/3newbg.png" alt="background" title="this is the background of page3" width="907px" height="510px">
-    </div>
-    
-    <div class="row, memory-grid">
-        @for (var i = 1; i <= game.numberOfPlayers; i++)
-        {
-            var Orde = i;
-            <div class="container1">
-                <input type="text" placeholder="Enter Player's Name" size="10" value="@game.playerName" />
-                <div class=" inputNumber"><h4>player @i</h4></div>
+        <div id="page3">
+            <div id="3Background">
+                <img src="https://wushu.neocities.org/raceTo21/3newbg.png" alt="background" title="this is the background of page3" width="907px" height="510px">
             </div>
-        }
-    </div>
+            <h5>@alert</h5>
+            <div class="row, memory-grid">
+                @for (var i = 1; i <= game.numberOfPlayers; i++)
+                {
+                    var index = i-1;
+                    <div class="container1">
+                        <input type="text" placeholder="Enter Player's Name" size="10" @bind="game.players[index].name" />
+                        <div class=" inputNumber"><h4>player @i</h4></div>
+                    </div>
+                }
+            </div>
 
-    <button id="next" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
-</div>
+            <button id="next" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => CheckPlayerName())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
+        </div>
     }
     else if (game.nextTask == GameTask.PlayerTurn)
     {
-    <div id="page4">
-        <div id="4Background">
-            <img src="https://wushu.neocities.org/raceTo21/4new.png" alt="background" title="this is the background of page3" width="907px" height="510px">
+        <div id="page4">
+            <div id="4Background">
+                <img src="https://wushu.neocities.org/raceTo21/4.png" alt="background" title="this is the background of page4" width="907px" height="510px">
+            </div>
+
             <div id="playerCard">
-                <input type="range" class="col-10 from-control-range" min="1" max="6" @bind="game.cardCount" />
+                <input type="range" class="drawCard" min="0" max="3" width="20px" @bind="game.cardCount" />
+                <div class=" cardNumber"><h3> @game.cardCount</h3></div>
+                <div class="WhoDrawCards"><h5> player @game.players[game.currentPlayer].name is drawing cards!</h5></div>
+                <button id="draw" class="btn-3d yellow " type="submit" style="border: none; background: transparent" @onclick="@(() => DrawCards())"> <img src="https://wushu.neocities.org/raceTo21/tableButton.png" width="110px" alt="submit" /></button>
+            </div>
+            <div class="row, memory-grid2">
+                @for (var i = 1; i <= game.numberOfPlayers; i++)
+                {
+                    <div class="container3">
+
+                        <div class="playerName"><h6>@game.players[i - 1].name</h6></div>
+                        <div class="playerScore"><h2>@game.players[i - 1].score /21</h2></div>
+                        <div class="playerStatue"> <h2>@game.players[i - 1].status</h2></div>
+                        <img src="https://wushu.neocities.org/raceTo21/tableBg.png" alt="background" title="this is the background of page4" width="191px" height="173.8px">
+                        <div class="playerCards">
+                            @foreach (Card card in game.players[i - 1].cards)
+                            {
+                                <img src=card_assets/@game.deck.cardIdToImage[card.id] width="40px" />
+                            }
+                        </div>
+                    </div>
+
+                }
+
             </div>
         </div>
-        <div class="row, memory-grid2">
-            @for (var i = 1; i <= game.numberOfPlayers; i++)
-            {
-                <div class="container2">
-                    <img src="https://wushu.neocities.org/raceTo21/tableBg.png" alt="background" title="this is the background of page4" width="191px" height="173.8px">
-                </div>
-            }
+        <div id="page2">
+            <div id="2Background">
+                <img src="https://wushu.neocities.org/raceTo21/2bg.png" alt="background" title="this is the background of page2" width="907px" height="510px">
+            </div>
+            <div id="playerNumber">
+                <input type="range" class="col-10 from-control-range" min="1" max="6" @bind="game.numberOfPlayers" />
+            </div>
+            <div id="PnumberBG"><h3>@game.numberOfPlayers</h3></div>
+            <div id="Pnumber"><h3>@game.numberOfPlayers</h3></div>
+            <button id="next" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
         </div>
+    }
+    else if (game.nextTask == GameTask.CheckForEnd) {
+
+    <div id="page5">
+        <div id="5Background">
+            <img src="https://wushu.neocities.org/raceTo21/5.png" alt="background" title="this is the background of page5" width="907px" height="510px">
+        </div>    
+        <div id="winnerName"><h3>@game.winner</h3></div>
+        <button id="restart"  type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
     </div>
     }
 </div>
 
 @code{
     Game game = new Game();
-    int a = 1;
+    string alert = "";
+    private void CheckPlayerName()
+    {
+        foreach (Player player in game.players)
+        {
+            Console.WriteLine(player.name);
+        }
+        foreach (Player player in game.players)
+        {
+
+            if (player == null || player.name.Length < 1)
+            {
+                alert = "Valid input!, you need to enter all player's names!";
+                return;
+            }
+        }
+        game.DoNextTask();
+    }
+
+    private void DrawCards()
+    {
+        Player player = game.players[game.currentPlayer];
+        if (game.cardCount != 0 )
+        {
+
+            if (player.status == PlayerStatus.active)
+            {
+                List<Card> GetCardOneTime = game.deck.DealTopCard(game.cardCount); //give player all cards they choose
+                foreach (Card card in GetCardOneTime)
+                {
+                    player.cards.Add(card);
+                }
+                player.score = game.ScoreHand(player);
+                if (player.score > 21)
+                {
+                    player.status = PlayerStatus.bust;
+                }
+                else if (player.score == 21)
+                {
+                    player.status = PlayerStatus.win;
+                }
+            }
+            game.currentPlayer++;
+            if (game.currentPlayer > game.players.Count - 1)
+            {
+                game.currentPlayer = 0; // back to the first player...
+            }
+        }
+        else
+        {
+            player.status = PlayerStatus.stay;
+        }
+    }
 }

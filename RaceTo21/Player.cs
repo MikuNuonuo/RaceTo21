@@ -5,10 +5,8 @@ namespace RaceTo21
 {
 	public class Player
 	{
-		public string name {
-			get; private set;
-		}
-		public List<Card> cards = new List<Card>(); //change Sting to Card
+        public string name;
+		public List<Card> cards = new List<Card>(); //change String to Card
 		public PlayerStatus status = PlayerStatus.active;
 		public int score;
 

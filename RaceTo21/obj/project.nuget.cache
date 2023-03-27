@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "n7RWlpiJquH9WTp5k3Y7R5R0s3GMa0CcntRz5iVjiBwi5bxTibP1sShiWpvP0MWzKNN5RcX5S6RBctWheMlFgA==",
+  "dgSpecHash": "4yl5a1zN8EXI3x0UhxvMHAv6IcHkwjVH/UbUcbC5cI3cQ5uoIW2JW++qdh6oCkxvQlZEtXxxEQS8hNSqJpBV/w==",
   "success": true,
-  "projectFilePath": "D:\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
+  "projectFilePath": "D:\\github\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.authorization\\5.0.17\\microsoft.aspnetcore.authorization.5.0.17.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.components\\5.0.17\\microsoft.aspnetcore.components.5.0.17.nupkg.sha512",

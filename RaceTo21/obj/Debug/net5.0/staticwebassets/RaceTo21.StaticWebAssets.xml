@@ -1,4 +1,4 @@
 ﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/" Path="D:\RaceTo21\RaceTo21\bin\Debug\net5.0\wwwroot\" />
-  <ContentRoot BasePath="/" Path="D:\RaceTo21\RaceTo21\obj\Debug\net5.0\scopedcss\bundle\" />
+  <ContentRoot BasePath="/" Path="D:\github\RaceTo21\RaceTo21\bin\Debug\net5.0\wwwroot\" />
+  <ContentRoot BasePath="/" Path="D:\github\RaceTo21\RaceTo21\obj\Debug\net5.0\scopedcss\bundle\" />
 </StaticWebAssets>

@@ -1150,11 +1150,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
+      "projectUniqueName": "D:\\github\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
       "projectName": "RaceTo21",
-      "projectPath": "D:\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
+      "projectPath": "D:\\github\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\RaceTo21\\RaceTo21\\obj\\",
+      "outputPath": "D:\\github\\RaceTo21\\RaceTo21\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",

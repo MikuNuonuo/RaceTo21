@@ -13,70 +13,70 @@ namespace RaceTo21.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 1 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 2 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using System.Net.Http.Json;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 3 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 4 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 5 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 6 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 7 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 8 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 9 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using RaceTo21;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "D:\RaceTo21\RaceTo21\_Imports.razor"
+#line 10 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
 using RaceTo21.Shared;
 
 #line default
@@ -91,10 +91,62 @@ using RaceTo21.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 76 "D:\RaceTo21\RaceTo21\Pages\Index.razor"
+#line 113 "D:\github\RaceTo21\RaceTo21\Pages\Index.razor"
       
     Game game = new Game();
-    int a = 1;
+    string alert = "";
+    private void CheckPlayerName()
+    {
+        foreach (Player player in game.players)
+        {
+            Console.WriteLine(player.name);
+        }
+        foreach (Player player in game.players)
+        {
+
+            if (player == null || player.name.Length < 1)
+            {
+                alert = "Valid input!, you need to enter all player's names!";
+                return;
+            }
+        }
+        game.DoNextTask();
+    }
+
+    private void DrawCards()
+    {
+        Player player = game.players[game.currentPlayer];
+        if (game.cardCount != 0 )
+        {
+
+            if (player.status == PlayerStatus.active)
+            {
+                List<Card> GetCardOneTime = game.deck.DealTopCard(game.cardCount); //give player all cards they choose
+                foreach (Card card in GetCardOneTime)
+                {
+                    player.cards.Add(card);
+                }
+                player.score = game.ScoreHand(player);
+                if (player.score > 21)
+                {
+                    player.status = PlayerStatus.bust;
+                }
+                else if (player.score == 21)
+                {
+                    player.status = PlayerStatus.win;
+                }
+            }
+            game.currentPlayer++;
+            if (game.currentPlayer > game.players.Count - 1)
+            {
+                game.currentPlayer = 0; // back to the first player...
+            }
+        }
+        else
+        {
+            player.status = PlayerStatus.stay;
+        }
+    }
 
 #line default
 #line hidden
