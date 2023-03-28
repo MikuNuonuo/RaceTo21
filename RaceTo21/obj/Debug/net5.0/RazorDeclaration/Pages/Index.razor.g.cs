@@ -91,7 +91,7 @@ using RaceTo21.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 113 "D:\github\RaceTo21\RaceTo21\Pages\Index.razor"
+#line 129 "D:\github\RaceTo21\RaceTo21\Pages\Index.razor"
       
     Game game = new Game();
     string alert = "";
@@ -106,7 +106,7 @@ using RaceTo21.Shared;
 
             if (player == null || player.name.Length < 1)
             {
-                alert = "Valid input!, you need to enter all player's names!";
+                alert = "Valid input! You need to enter all player's names!";
                 return;
             }
         }
@@ -136,16 +136,17 @@ using RaceTo21.Shared;
                     player.status = PlayerStatus.win;
                 }
             }
-            game.currentPlayer++;
-            if (game.currentPlayer > game.players.Count - 1)
-            {
-                game.currentPlayer = 0; // back to the first player...
-            }
         }
         else
         {
             player.status = PlayerStatus.stay;
         }
+        //game.currentPlayer++;
+        //if (game.currentPlayer > game.players.Count - 1)
+        //{
+        //    game.currentPlayer = 0; // back to the first player...
+        //}
+        game.checkForEnd();
     }
 
 #line default

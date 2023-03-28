@@ -34,7 +34,7 @@ namespace RaceTo21
             players.Add(new Player(n));
         }
 
-      
+
 
         /* Figures out what task to do next in game
          * as represented by field nextTask
@@ -50,7 +50,7 @@ namespace RaceTo21
             }
             else if (nextTask == GameTask.GetNumberOfPlayers)
             {
-                for (int i = 0; i < numberOfPlayers; i++) 
+                for (int i = 0; i < numberOfPlayers; i++)
                 {
                     players.Add(new Player(""));
                 }
@@ -64,103 +64,145 @@ namespace RaceTo21
                 //AddPlayer(name); // NOTE: player list will start from 0 index even though we use 1 for our count here to make the player numbering more human-friendly
                 nextTask = GameTask.PlayerTurn;
 
-               
+
             }
             else if (nextTask == GameTask.PlayerTurn)
             {
-
+                nextTask = GameTask.GameWinner;
                 /*cardTable.ShowHand(player);*/
-                nextTask = GameTask.CheckForEnd;
+                //nextTask = GameTask.CheckForEnd;
             }
             else if (nextTask == GameTask.CheckForEnd)
             {
-                if (!CheckActivePlayers())
-                {
-                    Player winner = DoFinalScoring();
-                    AnnounceWinner(winner); //output the winner of this round
 
-                    //new round
-                    /*List<Player> ContinuePlayers = new List<Player>(); *///page2, level2, checke whether players want to continue games
-                    foreach (Player player in players)
-                    {
-                        bool loop = true; //tracking whether player says Y or N
-                        while (loop)
-                        {
-                            Console.Write(player.name + ", do you want a new round? (Y/N)");
-                            string response = Console.ReadLine();
-                            if (response.ToUpper().StartsWith("Y")) //if player choose Y
-                            {
-                                player.cards.Clear(); //clear all hand cards
-                                player.score = 0; //reset score
-                                player.status = PlayerStatus.active; // player state become active
-                                /* ContinuePlayers.Add(player); */// add player into continueplayers list
-                                loop = false; // Jump out of the loop
-                            }
-                            else if (response.ToUpper().StartsWith("N")) //if player choose N
-                            {
-                                numberOfPlayers--; // player number --
-                                loop = false; // Jump out of the loop
-                            }
-                            else
-                            {
-                                Console.WriteLine("Please answer Y(es) or N(o)!"); //check invalid input
-                            }
-                        }
-                    }
-                    if (numberOfPlayers >= 2) //if more than 1 player continue playing game, game will begin again
-                    {
-                        /* players = ContinuePlayers;*/
-                        deck = new Deck();//new deck to start a new game
-                        deck.Shuffle();
-                        currentPlayer = 0; //back to the first player
-                        PlayerShuffle(); //shuffle players
-                        players.Remove(winner);//remove winner from players
-                        players.Add(winner);//page2, leve3, add winner to the end of players as the dealer
-                        nextTask = GameTask.IntroducePlayers;
-                    }
-                    else
-                    {
-                        if (numberOfPlayers == 1)
-                        { //if only 1 player continue playing game, game over and the only one player will win
-                            Console.WriteLine(players[0].name + " is final winner!");
-                        }
-                        /*Player.RealEnd();*/
-                        nextTask = GameTask.GameOver;
-                    }
-                }
-                else
-                {
-                    currentPlayer++;
-                    if (currentPlayer > players.Count - 1)
-                    {
-                        currentPlayer = 0; // back to the first player...
-                    }
-                    nextTask = GameTask.PlayerTurn;
-                }
             }
+            else if (nextTask == GameTask.GameWinner)
+            {
+                
+                newRound();
+            }
+
             else // we shouldn't get here...
             {
                 Console.WriteLine("I'm sorry, I don't know what to do now!");
                 nextTask = GameTask.GameOver;
             }
+
         }
+
+        private void newRound() {
+            Player winner = DoFinalScoring();
+            bool winner_continue = winner.isContinue;
+            List<Player> ContinuePlayers = new List<Player>(); //page2, level2, checke whether players want to continue games
+            foreach (Player player in players)
+            {
+                if (player.isContinue == true) {
+                    player.cards.Clear(); //clear all hand cards
+                    player.score = 0; //reset score
+                    player.status = PlayerStatus.active; // player state become active
+                    player.isContinue = false;
+                    ContinuePlayers.Add(player);
+                }
+            }
+            numberOfPlayers = ContinuePlayers.Count;
+            if (numberOfPlayers >= 2) //if more than 1 player continue playing game, game will begin again
+            {
+                deck = new Deck();//new deck to start a new game
+                deck.Shuffle();
+                players = ContinuePlayers;
+                currentPlayer = 0; //back to the first player
+                PlayerShuffle(); //shuffle players
+                if (winner_continue) 
+                {
+                    players.Remove(winner);//remove winner from players
+                    players.Add(winner);//page2, leve3, add winner to the end of players as the dealer
+                }
+                this.winner = "";
+                nextTask = GameTask.PlayerTurn;
+            }
+            else 
+            {
+                nextTask = GameTask.GameOver;
+            }
+        }
+
+        public void checkForEnd()
+        {
+            if (!CheckActivePlayers())
+            {
+                Player winner = DoFinalScoring();
+                winner.status = PlayerStatus.win;
+                AnnounceWinner(winner); //output the winner of this round
+                //new round
+                /*List<Player> ContinuePlayers = new List<Player>(); //page2, level2, checke whether players want to continue games
+                foreach (Player player in players)
+                {
+                    bool loop = true; //tracking whether player says Y or N
+                    while (loop)
+                    {
+                        Console.Write(player.name + ", do you want a new round? (Y/N)");
+                        string response = Console.ReadLine();
+                        if (response.ToUpper().StartsWith("Y")) //if player choose Y
+                        {
+                            player.cards.Clear(); //clear all hand cards
+                            player.score = 0; //reset score
+                            player.status = PlayerStatus.active; // player state become active
+                            ContinuePlayers.Add(player); // add player into continueplayers list
+                            loop = false; // Jump out of the loop
+                        }
+                        else if (response.ToUpper().StartsWith("N")) //if player choose N
+                        {
+                            numberOfPlayers--; // player number --
+                            loop = false; // Jump out of the loop
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please answer Y(es) or N(o)!"); //check invalid input
+                        }
+                    }
+                }
+                if (numberOfPlayers >= 2) //if more than 1 player continue playing game, game will begin again
+                {
+                    *//* players = ContinuePlayers;*//*
+                    deck = new Deck();//new deck to start a new game
+                    deck.Shuffle();
+                    currentPlayer = 0; //back to the first player
+                    PlayerShuffle(); //shuffle players
+                    players.Remove(winner);//remove winner from players
+                    players.Add(winner);//page2, leve3, add winner to the end of players as the dealer
+                    nextTask = GameTask.IntroducePlayers;
+                }
+                else
+                {
+                    if (numberOfPlayers == 1)
+                    { //if only 1 player continue playing game, game over and the only one player will win
+                        Console.WriteLine(players[0].name + " is final winner!");
+                    }
+                    *//*Player.RealEnd();*//*
+                    nextTask = GameTask.GameOver;
+                }*/
+            }
+            else
+            {
+                currentPlayer++;
+                if (currentPlayer > players.Count - 1)
+                {
+                    currentPlayer = 0; // back to the first player...
+                }
+                nextTask = GameTask.PlayerTurn;
+            }
+
+        }
+
+           
+        
+
 
 
         public int ScoreHand(Player player)
         {
-            int score = 0;
-            if (cheating == true && player.status == PlayerStatus.active)
-            {
-                string response = null;
-                while (int.TryParse(response, out score) == false)
-                {
-                    Console.Write("OK, what should player " + player.name + "'s score be?");
-                    response = Console.ReadLine();
-                }
-                return score;
-            }
-            else
-            {
+            int score = 0;           
+            
                 foreach (Card card in player.cards)
                 {
                     string faceValue = card.id.Remove(card.id.Length - 1);
@@ -178,8 +220,7 @@ namespace RaceTo21
                             score = score + int.Parse(faceValue);
                             break;
                     }
-                }
-            }
+                }           
             return score;
         }
 
@@ -229,12 +270,15 @@ namespace RaceTo21
         public Player DoFinalScoring()
         {
             int highScore = 0;
-            foreach (var player in players)
+            foreach (Player player in players)
             {
                 if (player.status == PlayerStatus.win) // someone hit 21
                 {
                     return player;
                 }
+            }
+            foreach (Player player in players)
+            {
                 if (player.status == PlayerStatus.active)
                 {
                     return player; //when just one player is active means he/she is the last remaining player and is the winner.
@@ -262,7 +306,7 @@ namespace RaceTo21
          * no parameter
          * no return
          */
-                    public void PlayerShuffle()// page2, level2
+        public void PlayerShuffle()// page2, level2
         {
             Console.WriteLine("Shuffling players...");
 

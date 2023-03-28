@@ -9,6 +9,7 @@ namespace RaceTo21
 		public List<Card> cards = new List<Card>(); //change String to Card
 		public PlayerStatus status = PlayerStatus.active;
 		public int score;
+        public bool isContinue;
 
 		public Player(string n)
 		{
