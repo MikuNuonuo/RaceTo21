@@ -1145,19 +1145,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+    "C:\\Users\\78649\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\github\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
+      "projectUniqueName": "D:\\GitHub\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
       "projectName": "RaceTo21",
-      "projectPath": "D:\\github\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
-      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\github\\RaceTo21\\RaceTo21\\obj\\",
+      "projectPath": "D:\\GitHub\\RaceTo21\\RaceTo21\\RaceTo21.csproj",
+      "packagesPath": "C:\\Users\\78649\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub\\RaceTo21\\RaceTo21\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\78649\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

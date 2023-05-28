@@ -13,70 +13,70 @@ namespace RaceTo21.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 1 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 2 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using System.Net.Http.Json;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 3 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 4 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 5 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 6 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 7 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 8 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 9 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using RaceTo21;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "D:\github\RaceTo21\RaceTo21\_Imports.razor"
+#line 10 "D:\GitHub\RaceTo21\RaceTo21\_Imports.razor"
 using RaceTo21.Shared;
 
 #line default
@@ -91,29 +91,22 @@ using RaceTo21.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 113 "D:\github\RaceTo21\RaceTo21\Pages\Index.razor"
+#line 129 "D:\GitHub\RaceTo21\RaceTo21\Pages\Index.razor"
       
     Game game = new Game();
-
-
-    private void UpdateName(ChangeEventArgs e)
-    {
-        game.playerName = e.Value.ToString();
-        game.AddPlayer(game.playerName);
-    }
-
+    string alert = "";
     private void CheckPlayerName()
     {
-        Console.WriteLine(game.players.Count);
-        if (game.players.Count < game.numberOfPlayers) 
+        foreach (Player player in game.players)
         {
-            return;
+            Console.WriteLine(player.name);
         }
         foreach (Player player in game.players)
         {
 
             if (player == null || player.name.Length < 1)
             {
+                alert = "Valid input! You need to enter all player's names!";
                 return;
             }
         }
@@ -143,16 +136,17 @@ using RaceTo21.Shared;
                     player.status = PlayerStatus.win;
                 }
             }
-            game.currentPlayer++;
-            if (game.currentPlayer > game.players.Count - 1)
-            {
-                game.currentPlayer = 0; // back to the first player...
-            }
         }
         else
         {
             player.status = PlayerStatus.stay;
         }
+        //game.currentPlayer++;
+        //if (game.currentPlayer > game.players.Count - 1)
+        //{
+        //    game.currentPlayer = 0; // back to the first player...
+        //}
+        game.checkForEnd();
     }
 
 #line default

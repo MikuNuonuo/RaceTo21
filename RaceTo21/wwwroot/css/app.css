@@ -85,11 +85,21 @@ h6 {
 }
 
 h2 {
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 100;
     text-align: center;
     font-family: 'Shippori Antique', sans-serif;
     position: absolute;
+}
+
+[aria-level="7"] {
+    font-size: 50px;
+    font-weight: 100;
+    letter-spacing: 8px;
+    text-align: center;
+    font-family: 'Road Rage', cursive;
+    position: absolute;
+    color:fuchsia;
 }
 #playerNumber {
     position: relative;
@@ -137,18 +147,18 @@ h2 {
 }
 #winnerName {
     position: relative;
-    top: -200px;
-    left: 5px;
+    top: -380px;
+    left: 400px;
 }
 .a {
     position: relative;
-    top: -200px;
-    left: 5px;
+    top: -320px;
+    left: 210px;
 }
-.continue {
-    position: relative;
-    top: -200px;
-    left: 5px;
+#continue {
+    position: absolute;
+    top: 300px;
+    left: 700px;
 }
 #PlayerTurn {
     position: relative;
@@ -156,15 +166,15 @@ h2 {
     left: 5px;
 }
 #winnerbutton {
-    position: relative;
-    top: -340px;
-    left: 200px;
+    position: absolute;
+    top: 450px;
+    left: 580px;
 }
 
 #againbutton {
-    position: relative;
-    top: -340px;
-    left: 200px;
+    position: absolute;
+    top: 470px;
+    left: 550px;
 }
 
 #draw {
@@ -198,6 +208,14 @@ h2 {
     top: -310px;
     left: 200px;
 }
+
+containerWin {
+    position: absolute;
+    width: 250px;
+    height: 35px;
+    top: 100px;
+    left: 300px;
+}
 .container3 {
     position: relative;
     width: 200px;
@@ -230,20 +248,20 @@ h2 {
 }
 .playerName {
     position: relative;
-    top: 50px;
-    left: 80px;
+    top: 55px;
+    left: 83px;
 }
 
 .playerScore {
     position: relative;
     top: 80px;
-    left: 80px;
+    left: 70px;
 }
 
 .playerStatue {
     position: relative;
-    top: 80px;
-    left: 50px;
+    top: 20px;
+    left: 62px;
 }
 
 .playerCards {
@@ -304,19 +322,5 @@ button {
 }
 
 
-
-/*button {
-    position: relative;
-   text-align: center;
-    display: inline-block;
-    font-size: 12px;
-    padding: 5px 31px;
-    color: rgb(0, 0, 0);
-    margin: 10px 10px 5px;
-    border-radius: 6px;
-    text-align: center;
-    transition: top .01s linear;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.15);
-}*/
 
 

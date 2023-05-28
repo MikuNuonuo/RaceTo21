@@ -14,7 +14,6 @@ namespace RaceTo21
         } // deck of cards
         public int currentPlayer = 0; // current player on list
         public GameTask nextTask;// keeps track of game state
-        private bool cheating = false; // lets you cheat for testing purposes if true
         public bool isEmpty = true;
         public string winner = "";
         public Game()
@@ -132,55 +131,7 @@ namespace RaceTo21
             {
                 Player winner = DoFinalScoring();
                 winner.status = PlayerStatus.win;
-                AnnounceWinner(winner); //output the winner of this round
-                //new round
-                /*List<Player> ContinuePlayers = new List<Player>(); //page2, level2, checke whether players want to continue games
-                foreach (Player player in players)
-                {
-                    bool loop = true; //tracking whether player says Y or N
-                    while (loop)
-                    {
-                        Console.Write(player.name + ", do you want a new round? (Y/N)");
-                        string response = Console.ReadLine();
-                        if (response.ToUpper().StartsWith("Y")) //if player choose Y
-                        {
-                            player.cards.Clear(); //clear all hand cards
-                            player.score = 0; //reset score
-                            player.status = PlayerStatus.active; // player state become active
-                            ContinuePlayers.Add(player); // add player into continueplayers list
-                            loop = false; // Jump out of the loop
-                        }
-                        else if (response.ToUpper().StartsWith("N")) //if player choose N
-                        {
-                            numberOfPlayers--; // player number --
-                            loop = false; // Jump out of the loop
-                        }
-                        else
-                        {
-                            Console.WriteLine("Please answer Y(es) or N(o)!"); //check invalid input
-                        }
-                    }
-                }
-                if (numberOfPlayers >= 2) //if more than 1 player continue playing game, game will begin again
-                {
-                    *//* players = ContinuePlayers;*//*
-                    deck = new Deck();//new deck to start a new game
-                    deck.Shuffle();
-                    currentPlayer = 0; //back to the first player
-                    PlayerShuffle(); //shuffle players
-                    players.Remove(winner);//remove winner from players
-                    players.Add(winner);//page2, leve3, add winner to the end of players as the dealer
-                    nextTask = GameTask.IntroducePlayers;
-                }
-                else
-                {
-                    if (numberOfPlayers == 1)
-                    { //if only 1 player continue playing game, game over and the only one player will win
-                        Console.WriteLine(players[0].name + " is final winner!");
-                    }
-                    *//*Player.RealEnd();*//*
-                    nextTask = GameTask.GameOver;
-                }*/
+                AnnounceWinner(winner); //output the winner of this round     
             }
             else
             {

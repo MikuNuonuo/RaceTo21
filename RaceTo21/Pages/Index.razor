@@ -54,75 +54,77 @@
     }
     else if (game.nextTask == GameTask.PlayerTurn)
     {
-    <div id="page4">
-        <div id="4Background">
-            <img src="https://wushu.neocities.org/raceTo21/4.png" alt="background" title="this is the background of page4" width="907px" height="510px">
-        </div>
+        <div id="page4">
+            <div id="4Background">
+                <img src="https://wushu.neocities.org/raceTo21/4.png" alt="background" title="this is the background of page4" width="907px" height="510px">
+            </div>
 
-        <div id="playerCard">
-            <input type="range" class="drawCard" min="0" max="3" width="20px" @bind="game.cardCount" />
-            <div class=" cardNumber"><h5> @game.cardCount</h5></div>
-            <div class="WhoDrawCards"><h5> player @game.players[game.currentPlayer].name is drawing cards!</h5></div>
-            <button id="draw" class="btn-3d yellow " type="submit" style="border: none; background: transparent" @onclick="@(() => DrawCards())"> <img src="https://wushu.neocities.org/raceTo21/tableButton.png" width="110px" alt="submit" /></button>
-        </div>
-        <div class="row, memory-grid2">
-            @for (var i = 1; i <= game.numberOfPlayers; i++)
-            {
-                <div class="container3">
+            <div id="playerCard">
+                <input type="range" class="drawCard" min="0" max="3" width="20px" @bind="game.cardCount" />
+                <div class=" cardNumber"><h5> @game.cardCount</h5></div>
+                <div class="WhoDrawCards"><h5> player @game.players[game.currentPlayer].name is drawing cards!</h5></div>
+                <button id="draw" class="btn-3d yellow " type="submit" style="border: none; background: transparent" @onclick="@(() => DrawCards())"> <img src="https://wushu.neocities.org/raceTo21/tableButton.png" width="110px" alt="submit" /></button>
+            </div>
+            <div class="row, memory-grid2">
+                @for (var i = 1; i <= game.numberOfPlayers; i++)
+                {
+                    <div class="container3">
 
-                    <div class="playerName"><h6>@game.players[i - 1].name</h6></div>
-                    <div class="playerScore"><h2>@game.players[i - 1].score /21</h2></div>
-                    <div class="playerStatue"> <h2>@game.players[i - 1].status</h2></div>
-                    <img src="https://wushu.neocities.org/raceTo21/tableBg.png" alt="background" title="this is the background of page4" width="191px" height="173.8px">
-                    <div class="playerCards">
-                        @foreach (Card card in game.players[i - 1].cards)
-                        {
-                            <img src=card_assets/@game.deck.cardIdToImage[card.id] width="40px" />
-                        }
+                        <div class="playerName"><h6>@game.players[i - 1].name</h6></div>
+                        <div class="playerScore"><h2>@game.players[i - 1].score /21</h2></div>
+                        <div class="playerStatue"> <h2>@game.players[i - 1].status</h2></div>
+                        <img src="https://wushu.neocities.org/raceTo21/tableBg.png" alt="background" title="this is the background of page4" width="191px" height="173.8px">
+                        <div class="playerCards">
+                            @foreach (Card card in game.players[i - 1].cards)
+                            {
+                                <img src=card_assets/@game.deck.cardIdToImage[card.id] width="40px" />
+                            }
+                        </div>
                     </div>
-                </div>
 
+                }
+
+            </div>
+            @if (game.winner != "")
+            {
+                <div>
+                    <button id="winnerbutton" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
+                </div>
             }
 
         </div>
-        @if (game.winner != "")
-        {
-            <div>
-                <button id="winnerbutton" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
-            </div>
-        }
-
-    </div>
     }
     else if (game.nextTask == GameTask.GameWinner)
     {
 
-    <div id="page5">
-        <div id="5Background">
-            <img src="https://wushu.neocities.org/raceTo21/5.png" alt="background" title="this is the background of page5" width="907px" height="510px">
+        <div id="page5">
+            <div id="5Background">
+                <img src="https://wushu.neocities.org/raceTo21/5.png" alt="background" title="this is the background of page5" width="907px" height="510px">
+            </div>
+            <div id="winnerName"><h2 aria-level="7">@game.winner</h2></div>
+            <h1 class="a">Do you want another game?</h1>
+            <div class="row, memory-grid" id="continue">
+                @for (int i = 0; i < game.numberOfPlayers; i++)
+                {
+                    int index = i;
+                    <div class="containerWin">
+                        <label for="@index">
+                            @game.players[i].name;
+                        </label>
+                        <br />
+                        <input type="checkbox" @bind="game.players[index].isContinue" />
+                        <br />
+                    </div>
+                }
+            </div>
+            <button id="againbutton" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
         </div>
-        <div id="winnerName"><p>@game.winner</p></div>
-        <p class="a">Do you want another game?</p>
-        <div class="continue">
-            @for (int i = 0; i < game.numberOfPlayers; i++)
-            {
-                int index = i;
-                <label for="@index">
-                    @game.players[i].name;
-                </label>
-                <br />
-                <input type="checkbox" @bind="game.players[index].isContinue" />
-                <br />
-            }
-        </div>
-        <button id="againbutton" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
-    </div>
 
     }
 
-    else if (game.nextTask == GameTask.GameOver) 
+    else if (game.nextTask == GameTask.GameOver)
     {
-    
+ 
     }
 </div>
 
@@ -153,8 +155,9 @@
         if (game.cardCount != 0 )
         {
 
-            if (player.status == PlayerStatus.active)
+            if (player.status == PlayerStatus.active || player.status == PlayerStatus.stay)
             {
+                player.status = PlayerStatus.active;
                 List<Card> GetCardOneTime = game.deck.DealTopCard(game.cardCount); //give player all cards they choose
                 foreach (Card card in GetCardOneTime)
                 {
@@ -169,6 +172,7 @@
                 {
                     player.status = PlayerStatus.win;
                 }
+          
             }
         }
         else
