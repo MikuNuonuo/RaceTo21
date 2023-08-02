@@ -91,7 +91,7 @@ using RaceTo21.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 131 "D:\GitHub\RaceTo21\RaceTo21\Pages\Index.razor"
+#line 127 "D:\GitHub\RaceTo21\RaceTo21\Pages\Index.razor"
       
     Game game = new Game();
     string alert = "";

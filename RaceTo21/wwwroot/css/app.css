@@ -147,7 +147,7 @@ h2 {
 }
 #winnerName {
     position: relative;
-    top: -380px;
+    top: -400px;
     left: 400px;
 }
 .a {
@@ -156,9 +156,9 @@ h2 {
     left: 210px;
 }
 #continue {
-    position: absolute;
-    top: 300px;
-    left: 700px;
+    position: relative;
+    top: -300px;
+    left: 108px;
 }
 #PlayerTurn {
     position: relative;
@@ -174,7 +174,7 @@ h2 {
 #againbutton {
     position: absolute;
     top: 470px;
-    left: 550px;
+    left: 822px;
 }
 
 #draw {
@@ -197,7 +197,7 @@ h2 {
 
 .inputNumber {
     position: relative;
-    left: 130px;
+    left: 155px;
     top: -35px;
 }
 
@@ -209,14 +209,26 @@ h2 {
     left: 200px;
 }
 
-containerWin {
+input {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.containerWin {
     position: absolute;
     width: 250px;
     height: 35px;
-    top: 100px;
+    top: 80px;
     left: 300px;
 }
-.container3 {
+
+.playerNameWin {
+    position: relative;
+    width: 250px;
+    top: 0px;
+    left: 80px;
+}
+    .container3 {
     position: relative;
     width: 200px;
     height: 200px;
@@ -231,6 +243,11 @@ containerWin {
 .memory-grid2 {
     display: grid;
     grid-template-columns: 208px 208px 208px 208px;
+}
+
+memory-grid3 {
+    display: grid;
+    grid-template-columns: 250px 250px 250px;
 }
 
 

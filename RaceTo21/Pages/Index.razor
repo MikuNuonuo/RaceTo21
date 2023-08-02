@@ -99,22 +99,18 @@
 
         <div id="page5">
             <div id="5Background">
-                <img src="https://wushu.neocities.org/raceTo21/5.png" alt="background" title="this is the background of page5" width="907px" height="510px">
+                <img src="https://wushu.neocities.org/raceTo21/page5.png" alt="background" title="this is the background of page5" width="907px" height="510px">
             </div>
             <div id="winnerName"><h2 aria-level="7">@game.winner</h2></div>
-            <h1 class="a">Do you want another game?</h1>
-            <div class="row, memory-grid" id="continue">
+            <div class="row, memory-grid3" id="continue">
                 @for (int i = 0; i < game.numberOfPlayers; i++)
                 {
                     int index = i;
-                    <div class="containerWin">
-                        <label for="@index">
-                            @game.players[i].name;
-                        </label>
-                        <br />
-                        <input type="checkbox" @bind="game.players[index].isContinue" />
-                        <br />
-                    </div>
+                    <!--<label for="@index">-->
+                    <div class="playerNameWin"><h4> @game.players[i].name </h4></div>
+                    <!--</label>-->
+                    <div class="input"><input type="checkbox" @bind="game.players[index].isContinue" /></div>
+                    <!-- </div>-->
                 }
             </div>
             <button id="againbutton" class="btn-3d pink" type="submit" style="border: none; background: transparent" @onclick="@(() => game.DoNextTask())"><img src="https://wushu.neocities.org/raceTo21/2button1.png" width="187px" height="47px" alt="submit" /></button>
